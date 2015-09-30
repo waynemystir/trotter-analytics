@@ -1,0 +1,10 @@
+com/trotter/analytics/IpServlet.class
+com/trotter/analytics/OfyHelper.class
+com/trotter/analytics/Booking.class
+com/trotter/analytics/EanError.class
+com/trotter/analytics/BookingRequest.class
+com/trotter/analytics/TrotterEanDatastore.class
+com/trotter/analytics/IpAddress.class
+com/trotter/analytics/Constants.class
+com/trotter/analytics/BookingResponse.class
+com/trotter/analytics/TrotterAnalytics.class

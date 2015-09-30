@@ -1,0 +1,10 @@
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/Booking.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/Constants.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/EanError.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/BookingRequest.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/BookingResponse.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/IpAddress.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/TrotterAnalytics.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/TrotterEanDatastore.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/OfyHelper.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/IpServlet.java

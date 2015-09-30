@@ -1,0 +1,418 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/bEaJ6f9y96TDProBPYqE1Z3pBvk\"",
+ "discoveryVersion": "v1",
+ "id": "wanalytics:v1",
+ "name": "wanalytics",
+ "version": "v1",
+ "description": "This is an API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://trotter-analytics-development.appspot.com/_ah/api/wanalytics/v1/",
+ "basePath": "/_ah/api/wanalytics/v1/",
+ "rootUrl": "https://trotter-analytics-development.appspot.com/_ah/api/",
+ "servicePath": "wanalytics/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "BookingRequest": {
+   "id": "BookingRequest",
+   "type": "object",
+   "properties": {
+    "affiliateConfirmationId": {
+     "type": "string"
+    },
+    "arrivalDate": {
+     "type": "string"
+    },
+    "bedTypeId": {
+     "type": "string"
+    },
+    "chargeableRate": {
+     "type": "number",
+     "format": "float"
+    },
+    "date": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "departDate": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    },
+    "homePhone": {
+     "type": "string"
+    },
+    "hotelId": {
+     "type": "string"
+    },
+    "hotelName": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "rateCode": {
+     "type": "string"
+    },
+    "rateKey": {
+     "type": "string"
+    },
+    "room1FirstName": {
+     "type": "string"
+    },
+    "room1LastName": {
+     "type": "string"
+    },
+    "roomDescription": {
+     "type": "string"
+    },
+    "roomTypeCode": {
+     "type": "string"
+    },
+    "smokingPref": {
+     "type": "string"
+    }
+   }
+  },
+  "BookingRequestCollection": {
+   "id": "BookingRequestCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "BookingRequest"
+     }
+    }
+   }
+  },
+  "BookingResponse": {
+   "id": "BookingResponse",
+   "type": "object",
+   "properties": {
+    "affiliateConfirmationId": {
+     "type": "string"
+    },
+    "confirmationId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "date": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "itineraryId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "reservationStatusCode": {
+     "type": "string"
+    }
+   }
+  },
+  "BookingResponseCollection": {
+   "id": "BookingResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "BookingResponse"
+     }
+    }
+   }
+  }
+ },
+ "methods": {
+  "getAllBookingRequestsForAffiliateConfirmationId": {
+   "id": "wanalytics.getAllBookingRequestsForAffiliateConfirmationId",
+   "path": "bookingrequestcollection/{affiliateConfirmationId}",
+   "httpMethod": "GET",
+   "parameters": {
+    "affiliateConfirmationId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "affiliateConfirmationId"
+   ],
+   "response": {
+    "$ref": "BookingRequestCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "getAllBookingResponsesForAffiliateConfirmationId": {
+   "id": "wanalytics.getAllBookingResponsesForAffiliateConfirmationId",
+   "path": "bookingresponsecollection/{affiliateConfirmationId}",
+   "httpMethod": "GET",
+   "parameters": {
+    "affiliateConfirmationId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "affiliateConfirmationId"
+   ],
+   "response": {
+    "$ref": "BookingResponseCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "postBookingRequest": {
+   "id": "wanalytics.postBookingRequest",
+   "path": "postBookingRequest/{affiliateConfirmationId}/{room1FirstName}/{room1LastName}/{hotelId}/{hotelName}/{arrivalDate}/{departDate}/{chargeableRate}/{email}/{homePhone}/{rateKey}/{roomTypeCode}/{rateCode}/{roomDescription}/{bedTypeId}/{smokingPref}",
+   "httpMethod": "POST",
+   "parameters": {
+    "affiliateConfirmationId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "arrivalDate": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "bedTypeId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "chargeableRate": {
+     "type": "number",
+     "required": true,
+     "format": "float",
+     "location": "path"
+    },
+    "departDate": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "email": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "homePhone": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelName": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "rateCode": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "rateKey": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "room1FirstName": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "room1LastName": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "roomDescription": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "roomTypeCode": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "smokingPref": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "affiliateConfirmationId",
+    "room1FirstName",
+    "room1LastName",
+    "hotelId",
+    "hotelName",
+    "arrivalDate",
+    "departDate",
+    "chargeableRate",
+    "email",
+    "homePhone",
+    "rateKey",
+    "roomTypeCode",
+    "rateCode",
+    "roomDescription",
+    "bedTypeId",
+    "smokingPref"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "postBookingResponse": {
+   "id": "wanalytics.postBookingResponse",
+   "path": "postBookingResponse/{affiliateConfirmationId}/{itineraryId}/{confirmationId}",
+   "httpMethod": "POST",
+   "parameters": {
+    "affiliateConfirmationId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "confirmationId": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    },
+    "itineraryId": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "affiliateConfirmationId",
+    "itineraryId",
+    "confirmationId"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "postEanError": {
+   "id": "wanalytics.postEanError",
+   "path": "postEanError/{itineraryId}/{handling}/{category}/{presentationMessage}/{verboseMessage}",
+   "httpMethod": "POST",
+   "parameters": {
+    "category": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "handling": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "itineraryId": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    },
+    "presentationMessage": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "verboseMessage": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "itineraryId",
+    "handling",
+    "category",
+    "presentationMessage",
+    "verboseMessage"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ }
+}
