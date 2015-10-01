@@ -20,6 +20,7 @@ public class OfyHelper implements ServletContextListener {
     ObjectifyService.register(BookingResponse.class);
     ObjectifyService.register(IpAddress.class);
     ObjectifyService.register(EanError.class);
+    ObjectifyService.register(TrotterProblem.class);
   }
 
   public void contextDestroyed(ServletContextEvent event) {

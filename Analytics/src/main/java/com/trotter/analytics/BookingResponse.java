@@ -8,6 +8,7 @@ import com.googlecode.objectify.Key;
 
 import java.lang.String;
 import java.util.Date;
+import java.lang.Boolean;
 
 @Entity
 public class BookingResponse {
@@ -19,7 +20,10 @@ public class BookingResponse {
   public String affiliateConfirmationId;
   public Long itineraryId;
   public Long confirmationId;
+  public Boolean processedWithConfirmation;
   public String reservationStatusCode;
+  public Boolean nonrefundable;
+  public String customerSessionId;
 
   public BookingResponse() {
     date = new Date();
@@ -35,11 +39,16 @@ public class BookingResponse {
     }
   }
 
-  public BookingResponse(String affiliateConfirmationId, Long itineraryId, Long confirmationId) {
+  public BookingResponse(String affiliateConfirmationId, Long itineraryId, Long confirmationId, Boolean processedWithConfirmation,
+                          String reservationStatusCode, Boolean nonrefundable, String customerSessionId) {
     this(affiliateConfirmationId);
     this.affiliateConfirmationId = affiliateConfirmationId;
     this.itineraryId = itineraryId;
     this.confirmationId = confirmationId;
+    this.processedWithConfirmation = processedWithConfirmation;
+    this.reservationStatusCode = reservationStatusCode;
+    this.nonrefundable = nonrefundable;
+    this.customerSessionId = customerSessionId;
   }
 
   public String getAffiliateConfirmationId() {
@@ -66,11 +75,35 @@ public class BookingResponse {
     this.confirmationId = confirmationId;
   }
 
+  public Boolean getProcessedWithConfirmation() {
+    return processedWithConfirmation;
+  }
+
+  public void setProcessedWithConfirmation(Boolean processedWithConfirmation) {
+    this.processedWithConfirmation = processedWithConfirmation;
+  }
+
   public String getReservationStatusCode() {
     return reservationStatusCode;
   }
 
   public void setReservationStatusCode(String reservationStatusCode) {
     this.reservationStatusCode = reservationStatusCode;
+  }
+
+  public Boolean getNonrefundable() {
+    return nonrefundable;
+  }
+
+  public void setNonrefundable(Boolean nonrefundable) {
+    this.nonrefundable = nonrefundable;
+  }
+
+  public String getCustomerSessionId() {
+    return customerSessionId;
+  }
+
+  public void setCustomerSessionId(String customerSessionId) {
+    this.customerSessionId = customerSessionId;
   }
 }

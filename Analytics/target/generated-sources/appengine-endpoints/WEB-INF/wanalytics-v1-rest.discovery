@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/bEaJ6f9y96TDProBPYqE1Z3pBvk\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ufkbc-Q5cGQkhzL2cY_StJ174iQ\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -88,6 +88,9 @@
      "type": "number",
      "format": "float"
     },
+    "customerSessionId": {
+     "type": "string"
+    },
     "date": {
      "type": "string",
      "format": "date-time"
@@ -110,6 +113,9 @@
     "id": {
      "type": "string",
      "format": "int64"
+    },
+    "nonrefundable": {
+     "type": "boolean"
     },
     "rateCode": {
      "type": "string"
@@ -157,6 +163,9 @@
      "type": "string",
      "format": "int64"
     },
+    "customerSessionId": {
+     "type": "string"
+    },
     "date": {
      "type": "string",
      "format": "date-time"
@@ -168,6 +177,12 @@
     "itineraryId": {
      "type": "string",
      "format": "int64"
+    },
+    "nonrefundable": {
+     "type": "boolean"
+    },
+    "processedWithConfirmation": {
+     "type": "boolean"
     },
     "reservationStatusCode": {
      "type": "string"
@@ -232,7 +247,7 @@
   },
   "postBookingRequest": {
    "id": "wanalytics.postBookingRequest",
-   "path": "postBookingRequest/{affiliateConfirmationId}/{room1FirstName}/{room1LastName}/{hotelId}/{hotelName}/{arrivalDate}/{departDate}/{chargeableRate}/{email}/{homePhone}/{rateKey}/{roomTypeCode}/{rateCode}/{roomDescription}/{bedTypeId}/{smokingPref}",
+   "path": "postBookingRequest/{affiliateConfirmationId}/{room1FirstName}/{room1LastName}/{hotelId}/{hotelName}/{arrivalDate}/{departDate}/{chargeableRate}/{email}/{homePhone}/{rateKey}/{roomTypeCode}/{rateCode}/{roomDescription}/{bedTypeId}/{smokingPref}/{nonrefundable}/{customerSessionId}",
    "httpMethod": "POST",
    "parameters": {
     "affiliateConfirmationId": {
@@ -254,6 +269,11 @@
      "type": "number",
      "required": true,
      "format": "float",
+     "location": "path"
+    },
+    "customerSessionId": {
+     "type": "string",
+     "required": true,
      "location": "path"
     },
     "departDate": {
@@ -278,6 +298,11 @@
     },
     "hotelName": {
      "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "nonrefundable": {
+     "type": "boolean",
      "required": true,
      "location": "path"
     },
@@ -333,7 +358,9 @@
     "rateCode",
     "roomDescription",
     "bedTypeId",
-    "smokingPref"
+    "smokingPref",
+    "nonrefundable",
+    "customerSessionId"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -341,7 +368,7 @@
   },
   "postBookingResponse": {
    "id": "wanalytics.postBookingResponse",
-   "path": "postBookingResponse/{affiliateConfirmationId}/{itineraryId}/{confirmationId}",
+   "path": "postBookingResponse/{affiliateConfirmationId}/{itineraryId}/{confirmationId}/{processedWithConfirmation}/{reservationStatusCode}/{nonrefundable}/{customerSessionId}",
    "httpMethod": "POST",
    "parameters": {
     "affiliateConfirmationId": {
@@ -355,17 +382,41 @@
      "format": "int64",
      "location": "path"
     },
+    "customerSessionId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
     "itineraryId": {
      "type": "string",
      "required": true,
      "format": "int64",
+     "location": "path"
+    },
+    "nonrefundable": {
+     "type": "boolean",
+     "required": true,
+     "location": "path"
+    },
+    "processedWithConfirmation": {
+     "type": "boolean",
+     "required": true,
+     "location": "path"
+    },
+    "reservationStatusCode": {
+     "type": "string",
+     "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
     "affiliateConfirmationId",
     "itineraryId",
-    "confirmationId"
+    "confirmationId",
+    "processedWithConfirmation",
+    "reservationStatusCode",
+    "nonrefundable",
+    "customerSessionId"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -408,6 +459,36 @@
     "handling",
     "category",
     "presentationMessage",
+    "verboseMessage"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "postTrotterProblem": {
+   "id": "wanalytics.postTrotterProblem",
+   "path": "postTrotterProblem/{category}/{shortMessage}/{verboseMessage}",
+   "httpMethod": "POST",
+   "parameters": {
+    "category": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "shortMessage": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "verboseMessage": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "category",
+    "shortMessage",
     "verboseMessage"
    ],
    "scopes": [

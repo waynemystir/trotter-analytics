@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/bEaJ6f9y96TDProBPYqE1Z3pBvk\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ufkbc-Q5cGQkhzL2cY_StJ174iQ\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -86,6 +86,9 @@
      "type": "number",
      "format": "float"
     },
+    "customerSessionId": {
+     "type": "string"
+    },
     "date": {
      "type": "string",
      "format": "date-time"
@@ -108,6 +111,9 @@
     "id": {
      "type": "string",
      "format": "int64"
+    },
+    "nonrefundable": {
+     "type": "boolean"
     },
     "rateCode": {
      "type": "string"
@@ -155,6 +161,9 @@
      "type": "string",
      "format": "int64"
     },
+    "customerSessionId": {
+     "type": "string"
+    },
     "date": {
      "type": "string",
      "format": "date-time"
@@ -166,6 +175,12 @@
     "itineraryId": {
      "type": "string",
      "format": "int64"
+    },
+    "nonrefundable": {
+     "type": "boolean"
+    },
+    "processedWithConfirmation": {
+     "type": "boolean"
     },
     "reservationStatusCode": {
      "type": "string"
@@ -244,6 +259,10 @@
      "required": true,
      "format": "float"
     },
+    "customerSessionId": {
+     "type": "string",
+     "required": true
+    },
     "departDate": {
      "type": "string",
      "required": true
@@ -262,6 +281,10 @@
     },
     "hotelName": {
      "type": "string",
+     "required": true
+    },
+    "nonrefundable": {
+     "type": "boolean",
      "required": true
     },
     "rateCode": {
@@ -309,7 +332,9 @@
     "rateCode",
     "roomDescription",
     "bedTypeId",
-    "smokingPref"
+    "smokingPref",
+    "nonrefundable",
+    "customerSessionId"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -327,16 +352,36 @@
      "required": true,
      "format": "int64"
     },
+    "customerSessionId": {
+     "type": "string",
+     "required": true
+    },
     "itineraryId": {
      "type": "string",
      "required": true,
      "format": "int64"
+    },
+    "nonrefundable": {
+     "type": "boolean",
+     "required": true
+    },
+    "processedWithConfirmation": {
+     "type": "boolean",
+     "required": true
+    },
+    "reservationStatusCode": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
     "affiliateConfirmationId",
     "itineraryId",
-    "confirmationId"
+    "confirmationId",
+    "processedWithConfirmation",
+    "reservationStatusCode",
+    "nonrefundable",
+    "customerSessionId"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -372,6 +417,31 @@
     "handling",
     "category",
     "presentationMessage",
+    "verboseMessage"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "wanalytics.postTrotterProblem": {
+   "id": "wanalytics.postTrotterProblem",
+   "parameters": {
+    "category": {
+     "type": "string",
+     "required": true
+    },
+    "shortMessage": {
+     "type": "string",
+     "required": true
+    },
+    "verboseMessage": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "category",
+    "shortMessage",
     "verboseMessage"
    ],
    "scopes": [

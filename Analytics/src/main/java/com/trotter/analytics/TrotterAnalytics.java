@@ -40,18 +40,25 @@ public class TrotterAnalytics {
                           		@Named("rateCode") String rateCode,
                           		@Named("roomDescription") String roomDescription,
                           		@Named("bedTypeId") String bedTypeId,
-                          		@Named("smokingPref") String smokingPref) {
+                          		@Named("smokingPref") String smokingPref,
+                              @Named("nonrefundable") Boolean nonrefundable,
+                              @Named("customerSessionId") String customerSessionId) {
     BookingRequest bookingRequest = new BookingRequest(affiliateConfirmationId, room1FirstName, room1LastName, hotelId,
                           hotelName, arrivalDate, departDate, chargeableRate, email, homePhone, rateKey, roomTypeCode, rateCode,
-                          roomDescription, bedTypeId, smokingPref);
+                          roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId);
     ObjectifyService.ofy().save().entity(bookingRequest).now();
   }
 
   @ApiMethod(name = "postBookingResponse")
   public void postBookingResponse(@Named("affiliateConfirmationId") String affiliateConfirmationId,
                               @Named("itineraryId") Long itineraryId,
-                              @Named("confirmationId") Long confirmationId) {
-    BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId, itineraryId, confirmationId);
+                              @Named("confirmationId") Long confirmationId,
+                              @Named("processedWithConfirmation") Boolean processedWithConfirmation,
+                              @Named("reservationStatusCode") String reservationStatusCode,
+                              @Named("nonrefundable") Boolean nonrefundable,
+                              @Named("customerSessionId") String customerSessionId) {
+    BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId, itineraryId, confirmationId, 
+                                            processedWithConfirmation, reservationStatusCode, nonrefundable, customerSessionId);
     ObjectifyService.ofy().save().entity(bookingResponse).now();
   }
 
@@ -73,5 +80,13 @@ public class TrotterAnalytics {
                               @Named("verboseMessage") String verboseMessage) {
       EanError ee = new EanError(itineraryId, handling, category, presentationMessage, verboseMessage);
       ObjectifyService.ofy().save().entity(ee).now();
+  }
+
+  @ApiMethod(name = "postTrotterProblem")
+  public void postTrotterProblem(@Named("category") String category,
+                              @Named("shortMessage") String shortMessage,
+                              @Named("verboseMessage") String verboseMessage) {
+      TrotterProblem tp = new TrotterProblem(category, shortMessage, verboseMessage);
+      ObjectifyService.ofy().save().entity(tp).now();
   }
 }

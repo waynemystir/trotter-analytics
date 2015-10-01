@@ -58,7 +58,9 @@ public class TrotterEanDatastore {
         ArrayList<BookingResponse> bookingRess = new ArrayList<BookingResponse>();
         for (Entity entity : entities) {
 			BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId,
-				(Long)entity.getProperty("itineraryId"), (Long)entity.getProperty("confirmationId"));
+				(Long)entity.getProperty("itineraryId"), (Long)entity.getProperty("confirmationId"),
+				(Boolean)entity.getProperty("processedWithConfirmation"), (String)entity.getProperty("reservationStatusCode"),
+				(Boolean)entity.getProperty("nonrefundable"), (String)entity.getProperty("customerSessionId"));
 			bookingRess.add(bookingResponse);
 		}
 

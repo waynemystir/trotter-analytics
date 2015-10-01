@@ -9,6 +9,7 @@ import com.googlecode.objectify.Key;
 import java.lang.String;
 import java.lang.Float;
 import java.util.Date;
+import java.lang.Boolean;
 
 @Entity
 public class BookingRequest {
@@ -33,6 +34,8 @@ public class BookingRequest {
   public String roomDescription;
   public String bedTypeId;
   public String smokingPref;
+  public Boolean nonrefundable;
+  public String customerSessionId;
 
   public BookingRequest() {
     date = new Date();
@@ -51,7 +54,8 @@ public class BookingRequest {
   public BookingRequest(String affiliateConfirmationId, String room1FirstName, String room1LastName, String hotelId,
                           String hotelName, String arrivalDate, String departDate, Float chargeableRate, String email,
                           String homePhone, String rateKey, String roomTypeCode, String rateCode,
-                          String roomDescription, String bedTypeId, String smokingPref) {
+                          String roomDescription, String bedTypeId, String smokingPref, Boolean nonrefundable,
+                          String customerSessionId) {
   	this(affiliateConfirmationId);
     this.affiliateConfirmationId = affiliateConfirmationId;
   	this.room1FirstName = room1FirstName;
@@ -69,6 +73,8 @@ public class BookingRequest {
     this.roomDescription = roomDescription;
     this.bedTypeId = bedTypeId;
     this.smokingPref = smokingPref;
+    this.nonrefundable = nonrefundable;
+    this.customerSessionId = customerSessionId;
   }
 
   public String getAffiliateConfirmationId() {
@@ -197,5 +203,21 @@ public class BookingRequest {
 
   public void setSmokingPref(String smokingPref) {
     this.smokingPref = smokingPref;
+  }
+
+  public Boolean getNonrefundable() {
+    return nonrefundable;
+  }
+
+  public void setNonrefundable(Boolean nonrefundable) {
+    this.nonrefundable = nonrefundable;
+  }
+
+  public String getCustomerSessionId() {
+    return customerSessionId;
+  }
+
+  public void setCustomerSessionId(String customerSessionId) {
+    this.customerSessionId = customerSessionId;
   }
 }
