@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Ufkbc-Q5cGQkhzL2cY_StJ174iQ\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/NdW5Zjb3hmUr4Dey0SvDta5q6zk\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,8 +11,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://trotter-analytics-development.appspot.com/_ah/api/",
- "rpcUrl": "https://trotter-analytics-development.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://trotter-analytics-production.appspot.com/_ah/api/",
+ "rpcUrl": "https://trotter-analytics-production.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -68,181 +68,15 @@
    }
   }
  },
- "schemas": {
-  "BookingRequest": {
-   "id": "BookingRequest",
-   "type": "object",
-   "properties": {
-    "affiliateConfirmationId": {
-     "type": "string"
-    },
-    "arrivalDate": {
-     "type": "string"
-    },
-    "bedTypeId": {
-     "type": "string"
-    },
-    "chargeableRate": {
-     "type": "number",
-     "format": "float"
-    },
-    "customerSessionId": {
-     "type": "string"
-    },
-    "date": {
-     "type": "string",
-     "format": "date-time"
-    },
-    "departDate": {
-     "type": "string"
-    },
-    "email": {
-     "type": "string"
-    },
-    "homePhone": {
-     "type": "string"
-    },
-    "hotelId": {
-     "type": "string"
-    },
-    "hotelName": {
-     "type": "string"
-    },
-    "id": {
-     "type": "string",
-     "format": "int64"
-    },
-    "nonrefundable": {
-     "type": "boolean"
-    },
-    "rateCode": {
-     "type": "string"
-    },
-    "rateKey": {
-     "type": "string"
-    },
-    "room1FirstName": {
-     "type": "string"
-    },
-    "room1LastName": {
-     "type": "string"
-    },
-    "roomDescription": {
-     "type": "string"
-    },
-    "roomTypeCode": {
-     "type": "string"
-    },
-    "smokingPref": {
-     "type": "string"
-    }
-   }
-  },
-  "BookingRequestCollection": {
-   "id": "BookingRequestCollection",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "items": {
-      "$ref": "BookingRequest"
-     }
-    }
-   }
-  },
-  "BookingResponse": {
-   "id": "BookingResponse",
-   "type": "object",
-   "properties": {
-    "affiliateConfirmationId": {
-     "type": "string"
-    },
-    "confirmationId": {
-     "type": "string",
-     "format": "int64"
-    },
-    "customerSessionId": {
-     "type": "string"
-    },
-    "date": {
-     "type": "string",
-     "format": "date-time"
-    },
-    "id": {
-     "type": "string",
-     "format": "int64"
-    },
-    "itineraryId": {
-     "type": "string",
-     "format": "int64"
-    },
-    "nonrefundable": {
-     "type": "boolean"
-    },
-    "processedWithConfirmation": {
-     "type": "boolean"
-    },
-    "reservationStatusCode": {
-     "type": "string"
-    }
-   }
-  },
-  "BookingResponseCollection": {
-   "id": "BookingResponseCollection",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "items": {
-      "$ref": "BookingResponse"
-     }
-    }
-   }
-  }
- },
  "methods": {
-  "wanalytics.getAllBookingRequestsForAffiliateConfirmationId": {
-   "id": "wanalytics.getAllBookingRequestsForAffiliateConfirmationId",
-   "allowGet": true,
-   "parameters": {
-    "affiliateConfirmationId": {
-     "type": "string",
-     "required": true
-    }
-   },
-   "parameterOrder": [
-    "affiliateConfirmationId"
-   ],
-   "returns": {
-    "$ref": "BookingRequestCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "wanalytics.getAllBookingResponsesForAffiliateConfirmationId": {
-   "id": "wanalytics.getAllBookingResponsesForAffiliateConfirmationId",
-   "allowGet": true,
-   "parameters": {
-    "affiliateConfirmationId": {
-     "type": "string",
-     "required": true
-    }
-   },
-   "parameterOrder": [
-    "affiliateConfirmationId"
-   ],
-   "returns": {
-    "$ref": "BookingResponseCollection"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
   "wanalytics.postBookingRequest": {
    "id": "wanalytics.postBookingRequest",
    "parameters": {
     "affiliateConfirmationId": {
+     "type": "string",
+     "required": true
+    },
+    "apiKey": {
      "type": "string",
      "required": true
     },
@@ -317,6 +151,7 @@
     }
    },
    "parameterOrder": [
+    "apiKey",
     "affiliateConfirmationId",
     "room1FirstName",
     "room1LastName",
@@ -347,6 +182,10 @@
      "type": "string",
      "required": true
     },
+    "apiKey": {
+     "type": "string",
+     "required": true
+    },
     "confirmationId": {
      "type": "string",
      "required": true,
@@ -375,6 +214,7 @@
     }
    },
    "parameterOrder": [
+    "apiKey",
     "affiliateConfirmationId",
     "itineraryId",
     "confirmationId",
@@ -390,6 +230,10 @@
   "wanalytics.postEanError": {
    "id": "wanalytics.postEanError",
    "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true
+    },
     "category": {
      "type": "string",
      "required": true
@@ -413,6 +257,7 @@
     }
    },
    "parameterOrder": [
+    "apiKey",
     "itineraryId",
     "handling",
     "category",
@@ -426,6 +271,10 @@
   "wanalytics.postTrotterProblem": {
    "id": "wanalytics.postTrotterProblem",
    "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true
+    },
     "category": {
      "type": "string",
      "required": true
@@ -440,6 +289,7 @@
     }
    },
    "parameterOrder": [
+    "apiKey",
     "category",
     "shortMessage",
     "verboseMessage"

@@ -23,9 +23,21 @@ import java.util.logging.Logger;
     audiences = {Constants.ANDROID_AUDIENCE}
 )
 public class TrotterAnalytics {
+  
+  private static final Logger log = Logger.getLogger(TrotterEanDatastore.class.getName());
+
+  private Boolean isValidKey(String apiKey) {
+      Boolean rb = apiKey.equals(Constants.TROTTER_API_KEY);
+
+      if (!rb) 
+          log.warning("Invalid API key " + apiKey + " was submitted");
+
+      return rb;
+  }
 
   @ApiMethod(name = "postBookingRequest")
-  public void postBookingRequest(@Named("affiliateConfirmationId") String affiliateConfirmationId,
+  public void postBookingRequest(@Named("apiKey") String apiKey,
+                                @Named("affiliateConfirmationId") String affiliateConfirmationId,
                               	@Named("room1FirstName") String room1FirstName,
                               	@Named("room1LastName") String room1LastName,
                               	@Named("hotelId") String hotelId,
@@ -43,6 +55,9 @@ public class TrotterAnalytics {
                           		@Named("smokingPref") String smokingPref,
                               @Named("nonrefundable") Boolean nonrefundable,
                               @Named("customerSessionId") String customerSessionId) {
+
+    if (!isValidKey(apiKey)) return;
+
     BookingRequest bookingRequest = new BookingRequest(affiliateConfirmationId, room1FirstName, room1LastName, hotelId,
                           hotelName, arrivalDate, departDate, chargeableRate, email, homePhone, rateKey, roomTypeCode, rateCode,
                           roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId);
@@ -50,42 +65,54 @@ public class TrotterAnalytics {
   }
 
   @ApiMethod(name = "postBookingResponse")
-  public void postBookingResponse(@Named("affiliateConfirmationId") String affiliateConfirmationId,
+  public void postBookingResponse(@Named("apiKey") String apiKey,
+                                @Named("affiliateConfirmationId") String affiliateConfirmationId,
                               @Named("itineraryId") Long itineraryId,
                               @Named("confirmationId") Long confirmationId,
                               @Named("processedWithConfirmation") Boolean processedWithConfirmation,
                               @Named("reservationStatusCode") String reservationStatusCode,
                               @Named("nonrefundable") Boolean nonrefundable,
                               @Named("customerSessionId") String customerSessionId) {
+
+    if (!isValidKey(apiKey)) return;
+
     BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId, itineraryId, confirmationId, 
                                             processedWithConfirmation, reservationStatusCode, nonrefundable, customerSessionId);
     ObjectifyService.ofy().save().entity(bookingResponse).now();
   }
 
-  @ApiMethod(name = "getAllBookingRequestsForAffiliateConfirmationId")
-  public ArrayList<BookingRequest> getAllBookingRequestsForAffiliateConfirmationId(@Named("affiliateConfirmationId") String affiliateConfirmationId) {
-      return new TrotterEanDatastore().getAllBookingRequestsForAffiliateConfirmationId(affiliateConfirmationId);
-  }
+  // @ApiMethod(name = "getAllBookingRequestsForAffiliateConfirmationId")
+  // public ArrayList<BookingRequest> getAllBookingRequestsForAffiliateConfirmationId(@Named("affiliateConfirmationId") String affiliateConfirmationId) {
+  //     return new TrotterEanDatastore().getAllBookingRequestsForAffiliateConfirmationId(affiliateConfirmationId);
+  // }
 
-  @ApiMethod(name = "getAllBookingResponsesForAffiliateConfirmationId")
-  public ArrayList<BookingResponse> getAllBookingResponsesForAffiliateConfirmationId(@Named("affiliateConfirmationId") String affiliateConfirmationId) {
-      return new TrotterEanDatastore().getAllBookingResponsesForAffiliateConfirmationId(affiliateConfirmationId);
-  }
+  // @ApiMethod(name = "getAllBookingResponsesForAffiliateConfirmationId")
+  // public ArrayList<BookingResponse> getAllBookingResponsesForAffiliateConfirmationId(@Named("affiliateConfirmationId") String affiliateConfirmationId) {
+  //     return new TrotterEanDatastore().getAllBookingResponsesForAffiliateConfirmationId(affiliateConfirmationId);
+  // }
 
   @ApiMethod(name = "postEanError")
-  public void postEanError(@Named("itineraryId") Long itineraryId,
+  public void postEanError(@Named("apiKey") String apiKey,
+                                @Named("itineraryId") Long itineraryId,
                               @Named("handling") String handling,
                               @Named("category") String category,
                               @Named("presentationMessage") String presentationMessage,
                               @Named("verboseMessage") String verboseMessage) {
+
+    if (!isValidKey(apiKey)) return;
+
       EanError ee = new EanError(itineraryId, handling, category, presentationMessage, verboseMessage);
       ObjectifyService.ofy().save().entity(ee).now();
   }
 
   @ApiMethod(name = "postTrotterProblem")
-  public void postTrotterProblem(@Named("category") String category,
+  public void postTrotterProblem(@Named("apiKey") String apiKey,
+                                @Named("category") String category,
                               @Named("shortMessage") String shortMessage,
                               @Named("verboseMessage") String verboseMessage) {
+
+    if (!isValidKey(apiKey)) return;
+
       TrotterProblem tp = new TrotterProblem(category, shortMessage, verboseMessage);
       ObjectifyService.ofy().save().entity(tp).now();
   }
