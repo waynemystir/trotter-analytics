@@ -45,6 +45,7 @@ public class TrotterAnalytics {
                           	  	@Named("arrivalDate") String arrivalDate,
                           	  	@Named("departDate") String departDate,
                           	  	@Named("chargeableRate") Float chargeableRate,
+                                @Named("currencyCode") String currencyCode,
                           	  	@Named("email") String email,
                           		@Named("homePhone") String homePhone,
                           		@Named("rateKey") String rateKey,
@@ -59,7 +60,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return;
 
     BookingRequest bookingRequest = new BookingRequest(affiliateConfirmationId, room1FirstName, room1LastName, hotelId,
-                          hotelName, arrivalDate, departDate, chargeableRate, email, homePhone, rateKey, roomTypeCode, rateCode,
+                          hotelName, arrivalDate, departDate, chargeableRate, currencyCode, email, homePhone, rateKey, roomTypeCode, rateCode,
                           roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId);
     ObjectifyService.ofy().save().entity(bookingRequest).now();
   }

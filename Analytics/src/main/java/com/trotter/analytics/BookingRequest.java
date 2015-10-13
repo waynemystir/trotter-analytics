@@ -26,6 +26,7 @@ public class BookingRequest {
   public String arrivalDate;
   public String departDate;
   public Float chargeableRate;
+  public String currencyCode;
   public String email;
   public String homePhone;
   public String rateKey;
@@ -52,8 +53,8 @@ public class BookingRequest {
   }
 
   public BookingRequest(String affiliateConfirmationId, String room1FirstName, String room1LastName, String hotelId,
-                          String hotelName, String arrivalDate, String departDate, Float chargeableRate, String email,
-                          String homePhone, String rateKey, String roomTypeCode, String rateCode,
+                          String hotelName, String arrivalDate, String departDate, Float chargeableRate, String currencyCode,
+                          String email, String homePhone, String rateKey, String roomTypeCode, String rateCode,
                           String roomDescription, String bedTypeId, String smokingPref, Boolean nonrefundable,
                           String customerSessionId) {
   	this(affiliateConfirmationId);
@@ -65,6 +66,7 @@ public class BookingRequest {
     this.arrivalDate = arrivalDate;
     this.departDate = departDate;
     this.chargeableRate = chargeableRate;
+    this.currencyCode = currencyCode;
     this.email = email;
     this.homePhone = homePhone;
     this.rateKey = rateKey;
@@ -139,6 +141,14 @@ public class BookingRequest {
 
   public void setChargeableRate(Float chargeableRate) {
     this.chargeableRate = chargeableRate;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
   }
 
   public String getEmail() {
