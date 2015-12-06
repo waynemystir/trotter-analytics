@@ -37,6 +37,8 @@ public class BookingRequest {
   public String smokingPref;
   public Boolean nonrefundable;
   public String customerSessionId;
+  public String ipAddress;
+  public String eanCid;
 
   public BookingRequest() {
     date = new Date();
@@ -56,7 +58,7 @@ public class BookingRequest {
                           String hotelName, String arrivalDate, String departDate, Float chargeableRate, String currencyCode,
                           String email, String homePhone, String rateKey, String roomTypeCode, String rateCode,
                           String roomDescription, String bedTypeId, String smokingPref, Boolean nonrefundable,
-                          String customerSessionId) {
+                          String customerSessionId, String ipAddress, String eanCid) {
   	this(affiliateConfirmationId);
     this.affiliateConfirmationId = affiliateConfirmationId;
   	this.room1FirstName = room1FirstName;
@@ -77,6 +79,8 @@ public class BookingRequest {
     this.smokingPref = smokingPref;
     this.nonrefundable = nonrefundable;
     this.customerSessionId = customerSessionId;
+    this.ipAddress = ipAddress;
+    this.eanCid = eanCid;
   }
 
   public String getAffiliateConfirmationId() {
@@ -229,5 +233,21 @@ public class BookingRequest {
 
   public void setCustomerSessionId(String customerSessionId) {
     this.customerSessionId = customerSessionId;
+  }
+
+  public String getIpAddress() {
+    return ipAddress;
+  }
+
+  public void setIpAddress(String ipAddress) {
+    this.ipAddress = ipAddress;
+  }
+
+  public String getEanCid() {
+    return eanCid;
+  }
+
+  public void setEanCid(String eanCid) {
+    this.eanCid = eanCid;
   }
 }

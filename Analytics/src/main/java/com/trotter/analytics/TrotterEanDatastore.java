@@ -60,7 +60,8 @@ public class TrotterEanDatastore {
 			BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId,
 				(Long)entity.getProperty("itineraryId"), (Long)entity.getProperty("confirmationId"),
 				(Boolean)entity.getProperty("processedWithConfirmation"), (String)entity.getProperty("reservationStatusCode"),
-				(Boolean)entity.getProperty("nonrefundable"), (String)entity.getProperty("customerSessionId"));
+				(Boolean)entity.getProperty("nonrefundable"), (String)entity.getProperty("customerSessionId"),
+				(String)entity.getProperty("ipAddress"), (String)entity.getProperty("eanCid"));
 			bookingRess.add(bookingResponse);
 		}
 

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/3i_JGje7tPNuHsdf_U7WOAE2f2s\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/8ADYH9vO0rVYE80kBEp8bSQ8dmg\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,8 +11,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://trotter-analytics-production.appspot.com/_ah/api/",
- "rpcUrl": "https://trotter-analytics-production.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://trotter-analytics-development.appspot.com/_ah/api/",
+ "rpcUrl": "https://trotter-analytics-development.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -68,6 +68,12 @@
    }
   }
  },
+ "schemas": {
+  "JsonMap": {
+   "id": "JsonMap",
+   "type": "object"
+  }
+ },
  "methods": {
   "wanalytics.postBookingRequest": {
    "id": "wanalytics.postBookingRequest",
@@ -105,6 +111,10 @@
      "type": "string",
      "required": true
     },
+    "eanCid": {
+     "type": "string",
+     "required": true
+    },
     "email": {
      "type": "string",
      "required": true
@@ -118,6 +128,10 @@
      "required": true
     },
     "hotelName": {
+     "type": "string",
+     "required": true
+    },
+    "ipAddress": {
      "type": "string",
      "required": true
     },
@@ -174,7 +188,9 @@
     "bedTypeId",
     "smokingPref",
     "nonrefundable",
-    "customerSessionId"
+    "customerSessionId",
+    "ipAddress",
+    "eanCid"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -197,6 +213,14 @@
      "format": "int64"
     },
     "customerSessionId": {
+     "type": "string",
+     "required": true
+    },
+    "eanCid": {
+     "type": "string",
+     "required": true
+    },
+    "ipAddress": {
      "type": "string",
      "required": true
     },
@@ -226,7 +250,9 @@
     "processedWithConfirmation",
     "reservationStatusCode",
     "nonrefundable",
-    "customerSessionId"
+    "customerSessionId",
+    "ipAddress",
+    "eanCid"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -269,6 +295,114 @@
     "presentationMessage",
     "verboseMessage"
    ],
+   "returns": {
+    "$ref": "JsonMap"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "wanalytics.postHotelSearch": {
+   "id": "wanalytics.postHotelSearch",
+   "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true
+    },
+    "displayName": {
+     "type": "string",
+     "required": true
+    },
+    "ipAddress": {
+     "type": "string",
+     "required": true
+    },
+    "latitude": {
+     "type": "number",
+     "required": true,
+     "format": "double"
+    },
+    "longitude": {
+     "type": "number",
+     "required": true,
+     "format": "double"
+    },
+    "numberResults": {
+     "type": "integer",
+     "required": true,
+     "format": "int32"
+    },
+    "placeId": {
+     "type": "string",
+     "required": true
+    },
+    "placeName": {
+     "type": "string",
+     "required": true
+    },
+    "zoomRadius": {
+     "type": "number",
+     "required": true,
+     "format": "double"
+    }
+   },
+   "parameterOrder": [
+    "apiKey",
+    "ipAddress",
+    "placeName",
+    "placeId",
+    "displayName",
+    "latitude",
+    "longitude",
+    "zoomRadius",
+    "numberResults"
+   ],
+   "returns": {
+    "$ref": "JsonMap"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "wanalytics.postLaunch": {
+   "id": "wanalytics.postLaunch",
+   "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true
+    },
+    "deviceType": {
+     "type": "string",
+     "required": true
+    },
+    "ipAddress": {
+     "type": "string",
+     "required": true
+    },
+    "newInstall": {
+     "type": "boolean",
+     "required": true
+    },
+    "osType": {
+     "type": "string",
+     "required": true
+    },
+    "osVersion": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "apiKey",
+    "ipAddress",
+    "osType",
+    "osVersion",
+    "deviceType",
+    "newInstall"
+   ],
+   "returns": {
+    "$ref": "JsonMap"
+   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
@@ -299,6 +433,9 @@
     "shortMessage",
     "verboseMessage"
    ],
+   "returns": {
+    "$ref": "JsonMap"
+   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

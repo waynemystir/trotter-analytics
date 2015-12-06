@@ -24,6 +24,8 @@ public class BookingResponse {
   public String reservationStatusCode;
   public Boolean nonrefundable;
   public String customerSessionId;
+  public String ipAddress;
+  public String eanCid;
 
   public BookingResponse() {
     date = new Date();
@@ -40,7 +42,7 @@ public class BookingResponse {
   }
 
   public BookingResponse(String affiliateConfirmationId, Long itineraryId, Long confirmationId, Boolean processedWithConfirmation,
-                          String reservationStatusCode, Boolean nonrefundable, String customerSessionId) {
+                          String reservationStatusCode, Boolean nonrefundable, String customerSessionId, String ipAddress, String eanCid) {
     this(affiliateConfirmationId);
     this.affiliateConfirmationId = affiliateConfirmationId;
     this.itineraryId = itineraryId;
@@ -49,6 +51,8 @@ public class BookingResponse {
     this.reservationStatusCode = reservationStatusCode;
     this.nonrefundable = nonrefundable;
     this.customerSessionId = customerSessionId;
+    this.ipAddress = ipAddress;
+    this.eanCid = eanCid;
   }
 
   public String getAffiliateConfirmationId() {
@@ -105,5 +109,21 @@ public class BookingResponse {
 
   public void setCustomerSessionId(String customerSessionId) {
     this.customerSessionId = customerSessionId;
+  }
+
+  public String getIpAddress() {
+    return ipAddress;
+  }
+
+  public void setIpAddress(String ipAddress) {
+    this.ipAddress = ipAddress;
+  }
+
+  public String getEanCid() {
+    return eanCid;
+  }
+
+  public void setEanCid(String eanCid) {
+    this.eanCid = eanCid;
   }
 }

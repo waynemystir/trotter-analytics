@@ -7,6 +7,7 @@ import com.google.appengine.api.users.User;
 
 import java.lang.Float;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.inject.Named;
 
@@ -25,6 +26,27 @@ import java.util.logging.Logger;
 public class TrotterAnalytics {
   
   private static final Logger log = Logger.getLogger(TrotterEanDatastore.class.getName());
+  private static final Hashtable launchResponse;
+  private static final Hashtable hotelSearchResponse;
+  private static final Hashtable eanErrorResponse;
+  private static final Hashtable trotterProblemResponse;
+
+  static {
+    launchResponse = new Hashtable();
+    hotelSearchResponse = new Hashtable();
+    eanErrorResponse = new Hashtable();
+    trotterProblemResponse = new Hashtable();
+
+    launchResponse.put("verboseAnalytics", true);
+    hotelSearchResponse.put("verboseAnalytics", true);
+    eanErrorResponse.put("verboseAnalytics", true);
+    trotterProblemResponse.put("verboseAnalytics", true);
+    
+    launchResponse.put("apiMethod", "postLaunch");
+    hotelSearchResponse.put("apiMethod", "postHotelSearch");
+    eanErrorResponse.put("apiMethod", "postEanError");
+    trotterProblemResponse.put("apiMethod", "postTrotterProblem");
+  }
 
   private Boolean isValidKey(String apiKey) {
       Boolean rb = apiKey.equals(Constants.TROTTER_API_KEY);
@@ -33,6 +55,41 @@ public class TrotterAnalytics {
           log.warning("Invalid API key " + apiKey + " was submitted");
 
       return rb;
+  }
+
+  @ApiMethod(name = "postLaunch")
+  public Hashtable postLaunch(@Named("apiKey") String apiKey,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("osType") String osType,
+                              @Named("osVersion") String osVersion,
+                              @Named("deviceType") String deviceType,
+                              @Named("newInstall") Boolean newInstall) {
+
+    if (!isValidKey(apiKey)) return null;
+
+    Launch launch = new Launch(ipAddress, osType, osVersion, deviceType, newInstall);
+    ObjectifyService.ofy().save().entity(launch).now();
+
+    return launchResponse;
+  }
+
+  @ApiMethod(name = "postHotelSearch")
+  public Hashtable postHotelSearch(@Named("apiKey") String apiKey,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("placeName") String placeName,
+                              @Named("placeId") String placeId,
+                              @Named("displayName") String displayName,
+                              @Named("latitude") Double latitude,
+                              @Named("longitude") Double longitude,
+                              @Named("zoomRadius") Double zoomRadius,
+                              @Named("numberResults") Integer numberResults) {
+
+    if (!isValidKey(apiKey)) return null;
+
+    HotelSearch hotelSearch = new HotelSearch(ipAddress, placeName, placeId, displayName, latitude, longitude, zoomRadius, numberResults);
+    ObjectifyService.ofy().save().entity(hotelSearch).now();
+
+    return hotelSearchResponse;
   }
 
   @ApiMethod(name = "postBookingRequest")
@@ -55,13 +112,15 @@ public class TrotterAnalytics {
                           		@Named("bedTypeId") String bedTypeId,
                           		@Named("smokingPref") String smokingPref,
                               @Named("nonrefundable") Boolean nonrefundable,
-                              @Named("customerSessionId") String customerSessionId) {
+                              @Named("customerSessionId") String customerSessionId,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("eanCid") String eanCid) {
 
     if (!isValidKey(apiKey)) return;
 
     BookingRequest bookingRequest = new BookingRequest(affiliateConfirmationId, room1FirstName, room1LastName, hotelId,
                           hotelName, arrivalDate, departDate, chargeableRate, currencyCode, email, homePhone, rateKey, roomTypeCode, rateCode,
-                          roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId);
+                          roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId, ipAddress, eanCid);
     ObjectifyService.ofy().save().entity(bookingRequest).now();
   }
 
@@ -73,12 +132,15 @@ public class TrotterAnalytics {
                               @Named("processedWithConfirmation") Boolean processedWithConfirmation,
                               @Named("reservationStatusCode") String reservationStatusCode,
                               @Named("nonrefundable") Boolean nonrefundable,
-                              @Named("customerSessionId") String customerSessionId) {
+                              @Named("customerSessionId") String customerSessionId,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("eanCid") String eanCid) {
 
     if (!isValidKey(apiKey)) return;
 
     BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId, itineraryId, confirmationId, 
-                                            processedWithConfirmation, reservationStatusCode, nonrefundable, customerSessionId);
+                                            processedWithConfirmation, reservationStatusCode, nonrefundable,
+                                            customerSessionId, ipAddress, eanCid);
     ObjectifyService.ofy().save().entity(bookingResponse).now();
   }
 
@@ -93,28 +155,32 @@ public class TrotterAnalytics {
   // }
 
   @ApiMethod(name = "postEanError")
-  public void postEanError(@Named("apiKey") String apiKey,
+  public Hashtable postEanError(@Named("apiKey") String apiKey,
                                 @Named("itineraryId") Long itineraryId,
                               @Named("handling") String handling,
                               @Named("category") String category,
                               @Named("presentationMessage") String presentationMessage,
                               @Named("verboseMessage") String verboseMessage) {
 
-    if (!isValidKey(apiKey)) return;
+    if (!isValidKey(apiKey)) return null;
 
-      EanError ee = new EanError(itineraryId, handling, category, presentationMessage, verboseMessage);
-      ObjectifyService.ofy().save().entity(ee).now();
+    EanError ee = new EanError(itineraryId, handling, category, presentationMessage, verboseMessage);
+    ObjectifyService.ofy().save().entity(ee).now();
+
+    return eanErrorResponse;
   }
 
   @ApiMethod(name = "postTrotterProblem")
-  public void postTrotterProblem(@Named("apiKey") String apiKey,
+  public Hashtable postTrotterProblem(@Named("apiKey") String apiKey,
                                 @Named("category") String category,
                               @Named("shortMessage") String shortMessage,
                               @Named("verboseMessage") String verboseMessage) {
 
-    if (!isValidKey(apiKey)) return;
+    if (!isValidKey(apiKey)) return null;
 
-      TrotterProblem tp = new TrotterProblem(category, shortMessage, verboseMessage);
-      ObjectifyService.ofy().save().entity(tp).now();
+    TrotterProblem tp = new TrotterProblem(category, shortMessage, verboseMessage);
+    ObjectifyService.ofy().save().entity(tp).now();
+
+    return trotterProblemResponse;
   }
 }
