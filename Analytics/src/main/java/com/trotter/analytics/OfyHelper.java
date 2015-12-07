@@ -17,6 +17,8 @@ public class OfyHelper implements ServletContextListener {
     // request.
     ObjectifyService.register(Launch.class);
     ObjectifyService.register(HotelSearch.class);
+    ObjectifyService.register(HotelInfo.class);
+    ObjectifyService.register(Rooms.class);
     ObjectifyService.register(Booking.class);
     ObjectifyService.register(BookingRequest.class);
     ObjectifyService.register(BookingResponse.class);

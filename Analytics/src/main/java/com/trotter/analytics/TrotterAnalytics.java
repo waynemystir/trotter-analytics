@@ -28,22 +28,30 @@ public class TrotterAnalytics {
   private static final Logger log = Logger.getLogger(TrotterEanDatastore.class.getName());
   private static final Hashtable launchResponse;
   private static final Hashtable hotelSearchResponse;
+  private static final Hashtable hotelInfoResponse;
+  private static final Hashtable roomsResponse;
   private static final Hashtable eanErrorResponse;
   private static final Hashtable trotterProblemResponse;
 
   static {
     launchResponse = new Hashtable();
     hotelSearchResponse = new Hashtable();
+    hotelInfoResponse = new Hashtable();
+    roomsResponse = new Hashtable();
     eanErrorResponse = new Hashtable();
     trotterProblemResponse = new Hashtable();
 
     launchResponse.put("verboseAnalytics", true);
     hotelSearchResponse.put("verboseAnalytics", true);
+    hotelInfoResponse.put("verboseAnalytics", true);
+    roomsResponse.put("verboseAnalytics", true);
     eanErrorResponse.put("verboseAnalytics", true);
     trotterProblemResponse.put("verboseAnalytics", true);
     
     launchResponse.put("apiMethod", "postLaunch");
     hotelSearchResponse.put("apiMethod", "postHotelSearch");
+    hotelInfoResponse.put("apiMethod", "postHotelInfo");
+    roomsResponse.put("apiMethod", "postRooms");
     eanErrorResponse.put("apiMethod", "postEanError");
     trotterProblemResponse.put("apiMethod", "postTrotterProblem");
   }
@@ -90,6 +98,35 @@ public class TrotterAnalytics {
     ObjectifyService.ofy().save().entity(hotelSearch).now();
 
     return hotelSearchResponse;
+  }
+
+  @ApiMethod(name = "postHotelInfo")
+  public Hashtable postHotelInfo(@Named("apiKey") String apiKey,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("hotelId") String hotelId,
+                              @Named("hotelName") String hotelName) {
+
+    if (!isValidKey(apiKey)) return null;
+
+    HotelInfo hotelInfo = new HotelInfo(ipAddress, hotelId, hotelName);
+    ObjectifyService.ofy().save().entity(hotelInfo).now();
+
+    return hotelInfoResponse;
+  }
+
+  @ApiMethod(name = "postRooms")
+  public Hashtable postRooms(@Named("apiKey") String apiKey,
+                              @Named("ipAddress") String ipAddress,
+                              @Named("hotelId") String hotelId,
+                              @Named("hotelName") String hotelName,
+                              @Named("numberRooms") Integer numberRooms) {
+
+    if (!isValidKey(apiKey)) return null;
+
+    Rooms rooms = new Rooms(ipAddress, hotelId, hotelName, numberRooms);
+    ObjectifyService.ofy().save().entity(rooms).now();
+
+    return roomsResponse;
   }
 
   @ApiMethod(name = "postBookingRequest")

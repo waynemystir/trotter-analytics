@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/8ADYH9vO0rVYE80kBEp8bSQ8dmg\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/IPifPyW5EnaPgGuhi3aMxLMWlM8\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,9 +11,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://trotter-analytics-development.appspot.com/_ah/api/wanalytics/v1/",
+ "baseUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/wanalytics/v1/",
  "basePath": "/_ah/api/wanalytics/v1/",
- "rootUrl": "https://trotter-analytics-development.appspot.com/_ah/api/",
+ "rootUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/",
  "servicePath": "wanalytics/v1/",
  "batchPath": "batch",
  "parameters": {
@@ -348,6 +348,45 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "postHotelInfo": {
+   "id": "wanalytics.postHotelInfo",
+   "path": "postHotelInfo/{apiKey}/{ipAddress}/{hotelId}/{hotelName}",
+   "httpMethod": "POST",
+   "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelName": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "ipAddress": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "apiKey",
+    "ipAddress",
+    "hotelId",
+    "hotelName"
+   ],
+   "response": {
+    "$ref": "JsonMap"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "postHotelSearch": {
    "id": "wanalytics.postHotelSearch",
    "path": "postHotelSearch/{apiKey}/{ipAddress}/{placeName}/{placeId}/{displayName}/{latitude}/{longitude}/{zoomRadius}/{numberResults}",
@@ -464,6 +503,52 @@
     "osVersion",
     "deviceType",
     "newInstall"
+   ],
+   "response": {
+    "$ref": "JsonMap"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "postRooms": {
+   "id": "wanalytics.postRooms",
+   "path": "postRooms/{apiKey}/{ipAddress}/{hotelId}/{hotelName}/{numberRooms}",
+   "httpMethod": "POST",
+   "parameters": {
+    "apiKey": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "hotelName": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "ipAddress": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "numberRooms": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "apiKey",
+    "ipAddress",
+    "hotelId",
+    "hotelName",
+    "numberRooms"
    ],
    "response": {
     "$ref": "JsonMap"
