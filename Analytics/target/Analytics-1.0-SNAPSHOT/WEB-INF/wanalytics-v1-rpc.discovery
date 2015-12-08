@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/IPifPyW5EnaPgGuhi3aMxLMWlM8\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/mNi7LCKJG5LVf9qa3MdXWUuG0XQ\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,8 +11,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/",
- "rpcUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://trotter-analytics-production.appspot.com/_ah/api/",
+ "rpcUrl": "https://trotter-analytics-production.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -404,12 +404,32 @@
      "type": "string",
      "required": true
     },
+    "appVersion": {
+     "type": "string",
+     "required": true
+    },
+    "bundleId": {
+     "type": "string",
+     "required": true
+    },
+    "bundleVersion": {
+     "type": "string",
+     "required": true
+    },
     "deviceType": {
+     "type": "string",
+     "required": true
+    },
+    "iosIdfa": {
      "type": "string",
      "required": true
     },
     "ipAddress": {
      "type": "string",
+     "required": true
+    },
+    "limitAdTracking": {
+     "type": "boolean",
      "required": true
     },
     "newInstall": {
@@ -431,7 +451,12 @@
     "osType",
     "osVersion",
     "deviceType",
-    "newInstall"
+    "newInstall",
+    "iosIdfa",
+    "limitAdTracking",
+    "bundleId",
+    "bundleVersion",
+    "appVersion"
    ],
    "returns": {
     "$ref": "JsonMap"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/IPifPyW5EnaPgGuhi3aMxLMWlM8\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/mNi7LCKJG5LVf9qa3MdXWUuG0XQ\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,9 +11,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/wanalytics/v1/",
+ "baseUrl": "https://trotter-analytics-production.appspot.com/_ah/api/wanalytics/v1/",
  "basePath": "/_ah/api/wanalytics/v1/",
- "rootUrl": "https://trotter-analytics-beta.appspot.com/_ah/api/",
+ "rootUrl": "https://trotter-analytics-production.appspot.com/_ah/api/",
  "servicePath": "wanalytics/v1/",
  "batchPath": "batch",
  "parameters": {
@@ -462,10 +462,25 @@
   },
   "postLaunch": {
    "id": "wanalytics.postLaunch",
-   "path": "postLaunch/{apiKey}/{ipAddress}/{osType}/{osVersion}/{deviceType}/{newInstall}",
+   "path": "postLaunch/{apiKey}/{ipAddress}/{osType}/{osVersion}/{deviceType}/{newInstall}/{iosIdfa}/{limitAdTracking}/{bundleId}/{bundleVersion}/{appVersion}",
    "httpMethod": "POST",
    "parameters": {
     "apiKey": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "appVersion": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "bundleId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "bundleVersion": {
      "type": "string",
      "required": true,
      "location": "path"
@@ -475,8 +490,18 @@
      "required": true,
      "location": "path"
     },
+    "iosIdfa": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
     "ipAddress": {
      "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "limitAdTracking": {
+     "type": "boolean",
      "required": true,
      "location": "path"
     },
@@ -502,7 +527,12 @@
     "osType",
     "osVersion",
     "deviceType",
-    "newInstall"
+    "newInstall",
+    "iosIdfa",
+    "limitAdTracking",
+    "bundleId",
+    "bundleVersion",
+    "appVersion"
    ],
    "response": {
     "$ref": "JsonMap"
