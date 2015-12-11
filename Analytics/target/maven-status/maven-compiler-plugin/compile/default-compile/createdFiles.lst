@@ -1,3 +1,4 @@
+com/trotter/analytics/CheckIfAdWordsServlet.class
 com/trotter/analytics/IpServlet.class
 com/trotter/analytics/Booking.class
 com/trotter/analytics/BookingRequest.class
@@ -8,8 +9,8 @@ com/trotter/analytics/Constants.class
 com/trotter/analytics/IpAddress.class
 com/trotter/analytics/TrotterAnalytics.class
 com/trotter/analytics/OfyHelper.class
-com/trotter/analytics/EanError.class
 com/trotter/analytics/Rooms.class
+com/trotter/analytics/EanError.class
 com/trotter/analytics/TrotterProblem.class
 com/trotter/analytics/TrotterEanDatastore.class
 com/trotter/analytics/BookingResponse.class

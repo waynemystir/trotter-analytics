@@ -3,19 +3,6 @@ package com.trotter.analytics;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.NotFoundException;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.ThreadManager;
- 
-import com.google.appengine.api.urlfetch.HTTPHeader;
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchService;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-
-import java.net.MalformedURLException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
- 
-import com.google.appengine.api.urlfetch.HTTPHeader;
 
 import java.lang.Float;
 import java.util.List;
@@ -24,17 +11,14 @@ import java.util.Hashtable;
 
 import javax.inject.Named;
 
-import com.googlecode.objectify.ObjectifyService;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.logging.Logger;
-
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Defines v1 of a Trotter Analytics
@@ -77,16 +61,6 @@ public class TrotterAnalytics {
     trotterProblemResponse.put("apiMethod", "postTrotterProblem");
   }
 
-  private static final String ADWORDS_URL = "https://www.googleadservices.com/pagead/conversion";
-  private static final String ADWORDS_CONVERSION_ID = "12345";
-  private static final String ADWORDS_CONVERSION_LABEL = "waynester";
-
-  private static final String ADWORDS_PK_LABEL = "label";
-  private static final String ADWORDS_PK_RDID = "rdid";
-  private static final String ADWORDS_PK_BUNDLEID = "bundleid";
-  private static final String ADWORDS_PK_IDTYPE = "idtype";
-  private static final String ADWORDS_PK_LIMIT_AD_TRACKING_STATUS = "lat";
-
   private Boolean isValidKey(String apiKey) {
       Boolean rb = apiKey.equals(Constants.TROTTER_API_KEY);
 
@@ -113,53 +87,19 @@ public class TrotterAnalytics {
 
     Launch launch = new Launch(ipAddress, osType, osVersion, deviceType, newInstall, false, iosIdfa, bundleId, bundleVersion,
                                   appVersion, limitAdTracking);
-    ObjectifyService.ofy().save().entity(launch).now();
+    ofy().save().entity(launch).now();
 
-    checkIfAdWordsInstall(launch);
+    Queue queue = QueueFactory.getDefaultQueue();
+    queue.add(TaskOptions.Builder
+                .withUrl("/CheckIfAdWordsServlet")
+                .method(Method.GET)
+                .param("launchid", Long.toString(launch.id))
+    );
+
+    log.info("BACK in postLaunch, about to return");
+
     return launchResponse;
   }
-
-  protected void checkIfAdWordsInstall(Launch launch) {
-        log.info("START checkIfAdWordsInstall: " + launch.id);
-        URLFetchService fetcher = URLFetchServiceFactory.getURLFetchService();
-        try {
-            // URL url = new URL("https://api.ipify.org");
-
-            String us = String.format("%s/%s/?%s=%s&%s=%s&%s=%s&%s=%b", ADWORDS_URL, ADWORDS_CONVERSION_ID, ADWORDS_PK_LABEL,
-                                                    ADWORDS_CONVERSION_LABEL, ADWORDS_PK_RDID, launch.iosIdfa,
-                                                    ADWORDS_PK_IDTYPE, "idfa", ADWORDS_PK_LIMIT_AD_TRACKING_STATUS,
-                                                    launch.limitAdTracking);
-            log.info("checkIfAdWordsInstall URLstr: " + us);
-            URL url = new URL(us);
-            Future future = fetcher.fetchAsync(url);
- 
-            // Other stuff can happen here!
- 
-            HTTPResponse response = (HTTPResponse) future.get();
-            byte[] content = response.getContent();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bos.write(content);
-            String responseString = new String(bos.toByteArray());
-            int responseCode = response.getResponseCode();
-            log.info(String.format("caw code:%d rs:%s", responseCode, responseString));
-            URL finalUrl = response.getFinalUrl();
-            List headers = response.getHeaders();
- 
-            // for(HTTPHeader header : headers) {
-            //     String headerName = header.getName();
-            //     String headerValue = header.getValue();
-            // }
- 
-        } catch (IOException e) {
-            // new URL throws MalformedUrlException, which is impossible for us here
-        } catch (InterruptedException e) {
-            // Exception from using java.concurrent.Future
-        } catch (ExecutionException e) {
-            // Exception from using java.concurrent.Future
-            e.printStackTrace();
-        }
- 
-    }
 
   @ApiMethod(name = "postHotelSearch")
   public Hashtable postHotelSearch(@Named("apiKey") String apiKey,
@@ -175,7 +115,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return null;
 
     HotelSearch hotelSearch = new HotelSearch(ipAddress, placeName, placeId, displayName, latitude, longitude, zoomRadius, numberResults);
-    ObjectifyService.ofy().save().entity(hotelSearch).now();
+    ofy().save().entity(hotelSearch).now();
 
     return hotelSearchResponse;
   }
@@ -189,7 +129,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return null;
 
     HotelInfo hotelInfo = new HotelInfo(ipAddress, hotelId, hotelName);
-    ObjectifyService.ofy().save().entity(hotelInfo).now();
+    ofy().save().entity(hotelInfo).now();
 
     return hotelInfoResponse;
   }
@@ -204,7 +144,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return null;
 
     Rooms rooms = new Rooms(ipAddress, hotelId, hotelName, numberRooms);
-    ObjectifyService.ofy().save().entity(rooms).now();
+    ofy().save().entity(rooms).now();
 
     return roomsResponse;
   }
@@ -238,7 +178,7 @@ public class TrotterAnalytics {
     BookingRequest bookingRequest = new BookingRequest(affiliateConfirmationId, room1FirstName, room1LastName, hotelId,
                           hotelName, arrivalDate, departDate, chargeableRate, currencyCode, email, homePhone, rateKey, roomTypeCode, rateCode,
                           roomDescription, bedTypeId, smokingPref, nonrefundable, customerSessionId, ipAddress, eanCid);
-    ObjectifyService.ofy().save().entity(bookingRequest).now();
+    ofy().save().entity(bookingRequest).now();
   }
 
   @ApiMethod(name = "postBookingResponse")
@@ -258,7 +198,7 @@ public class TrotterAnalytics {
     BookingResponse bookingResponse = new BookingResponse(affiliateConfirmationId, itineraryId, confirmationId, 
                                             processedWithConfirmation, reservationStatusCode, nonrefundable,
                                             customerSessionId, ipAddress, eanCid);
-    ObjectifyService.ofy().save().entity(bookingResponse).now();
+    ofy().save().entity(bookingResponse).now();
   }
 
   // @ApiMethod(name = "getAllBookingRequestsForAffiliateConfirmationId")
@@ -282,7 +222,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return null;
 
     EanError ee = new EanError(itineraryId, handling, category, presentationMessage, verboseMessage);
-    ObjectifyService.ofy().save().entity(ee).now();
+    ofy().save().entity(ee).now();
 
     return eanErrorResponse;
   }
@@ -296,7 +236,7 @@ public class TrotterAnalytics {
     if (!isValidKey(apiKey)) return null;
 
     TrotterProblem tp = new TrotterProblem(category, shortMessage, verboseMessage);
-    ObjectifyService.ofy().save().entity(tp).now();
+    ofy().save().entity(tp).now();
 
     return trotterProblemResponse;
   }
