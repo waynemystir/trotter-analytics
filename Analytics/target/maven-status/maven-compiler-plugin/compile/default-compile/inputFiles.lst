@@ -9,8 +9,9 @@
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/HotelSearch.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/HotelInfo.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/Constants.java
-/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/IpAddress.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/Environment.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/BookingResponse.java
+/Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/IpAddress.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/TrotterAnalytics.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/OfyHelper.java
 /Users/wayne/Development/travel/trotter-analytics/Analytics/src/main/java/com/trotter/analytics/Launch.java

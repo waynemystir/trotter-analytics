@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/vw63AuyYsSBe2c59loUQGIACXN8\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/nDhBlpiZN1Bn61BCZSyTLFH88OU\"",
  "discoveryVersion": "v1",
  "id": "wanalytics:v1",
  "name": "wanalytics",
@@ -11,9 +11,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://trotter-analytics-development.appspot.com/_ah/api/wanalytics/v1/",
+ "baseUrl": "https://${app.id}.appspot.com/_ah/api/wanalytics/v1/",
  "basePath": "/_ah/api/wanalytics/v1/",
- "rootUrl": "https://trotter-analytics-development.appspot.com/_ah/api/",
+ "rootUrl": "https://${app.id}.appspot.com/_ah/api/",
  "servicePath": "wanalytics/v1/",
  "batchPath": "batch",
  "parameters": {
